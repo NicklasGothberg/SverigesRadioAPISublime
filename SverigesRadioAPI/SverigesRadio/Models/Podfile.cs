@@ -10,7 +10,6 @@
         
         public string Url { get; set; } = string.Empty;
 
-        
         public ProgramChannel Program { get; set; } = new ProgramChannel();
         
         public DateTime AvailableFromUtc { get; set; }

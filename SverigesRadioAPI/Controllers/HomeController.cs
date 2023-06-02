@@ -9,7 +9,7 @@ namespace SverigesRadioAPI.Controllers
     {
         private const string CONTROLLER_NAME = "HomeController";
 
-        private ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger;
         public HomeController(ILogger<HomeController> logger)
         {
             this._logger = logger;
@@ -23,7 +23,7 @@ namespace SverigesRadioAPI.Controllers
 
             try
             {
-                programs = await sr.GetProgramsAsync();
+                programs = await sr.GetProgramsAsync(false, true, ProgramCategoryEnum.Humor);
             }
             catch (ArgumentNullException exception)
             {
@@ -54,7 +54,7 @@ namespace SverigesRadioAPI.Controllers
                 {
                     var podFiles = await sr.GetPodfilesAsync(program.Id);
 
-                    // Not all programs with "Haspods" set to true actually have any podfiles.
+                    //NOTE: Not all programs with "Haspods" set to true actually have any podfiles.
                     if (!podFiles.Any()) continue;
 
                     toReturn.Add(new ProgramPodcastViewModel

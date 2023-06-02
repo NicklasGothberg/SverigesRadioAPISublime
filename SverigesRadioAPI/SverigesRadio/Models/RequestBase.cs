@@ -1,6 +1,6 @@
 ﻿namespace SverigesRadioAPI.SverigesRadio.Models
 {
-    public class ResponseBase
+    public class RequestBase
     {
         public string copyright { get; set; } = string.Empty;
 

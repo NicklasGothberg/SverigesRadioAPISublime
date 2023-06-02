@@ -1,7 +1,6 @@
 ﻿@model List<SverigesRadioAPI.ViewModels.ProgramPodcastViewModel>
 <div>
     <h1 class="text-center">Välkommen!</h1>
-    <h2 class="pb-2 mb-2 border-bottom text-center">Här nedan listas alla SRs kanaler, under kategorin humor, som har poddar</h2>
     @foreach (var program in Model)
     {
         <div class="row border-bottom my-4">
@@ -26,9 +25,3 @@
         </div>
     }
 </div>
-
-<script>
-const SecondsToIsoString = seconds => new Date(seconds * 1000).toISOString().slice(11, 19)
-
-
-</script>

@@ -5,7 +5,6 @@ namespace SverigesRadioAPI.SverigesRadio
 {
     public class SverigesRadio
     {
-
         private const string BASE_URL = @"http://api.sr.se/api/v2/";
         private readonly HttpClient _httpClient = new();
 
@@ -33,19 +32,19 @@ namespace SverigesRadioAPI.SverigesRadio
         /// <summary>
         /// Gets all the programs belonging to a certain categoryId
         /// </summary>
-        /// <param name="isArchived">Defaults to false</param>
-        /// <param name="hasPod">Defaults to true</param>
-        /// <param name="categoryId">DEfaults to 133 - humor</param>
+        /// <param name="isArchived">Includes archived programs or not</param>
+        /// <param name="hasPod">Only include programs with pods</param>
+        /// <param name="category">Category of program</param>  
         /// <returns>A list of radio programs</returns>
-        public async Task<List<Models.RadioProgram>> GetProgramsAsync(bool isArchived = false, bool hasPod = true, int categoryId = 133)
+        public async Task<List<RadioProgram>> GetProgramsAsync(bool isArchived, bool hasPod, ProgramCategoryEnum category)
         {
-            var queryParams = $"?filter=program.isarchived&filterValue={isArchived}&filter=program.haspod&filterValue={hasPod}&programcategoryid={categoryId}&format=json";
+            var queryParams = $"?filter=program.isarchived&filterValue={isArchived}&filter=program.haspod&filterValue={hasPod}&programcategoryid={(int)category}&format=json";
 
             var response = await this._httpClient.GetAsync(new Uri($"{BASE_URL}{Endpoints.Programs}{queryParams}"));
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
-            
+
             var programList = JsonConvert.DeserializeObject<ProgramList>(content);
             ArgumentNullException.ThrowIfNull(programList);
 
@@ -64,7 +63,7 @@ namespace SverigesRadioAPI.SverigesRadio
         /// Gets the data from the Pagination Nextpage Url.
         /// </summary>
         /// <param name="pagination"></param>
-        /// <returns>All the data from the NextPage Url parsed to its corresponding model</returns
+        /// <returns>All the data from the NextPage Url parsed to its corresponding model</returns>
         private async Task<T> GetPaginationPage<T>(Pagination pagination)
         {
             var response = await this._httpClient.GetAsync(pagination.NextPage);

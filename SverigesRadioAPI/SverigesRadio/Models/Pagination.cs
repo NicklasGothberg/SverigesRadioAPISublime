@@ -1,8 +1,6 @@
-﻿using System.Text.Json.Serialization;
-
-namespace SverigesRadioAPI.SverigesRadio.Models
+﻿namespace SverigesRadioAPI.SverigesRadio.Models
 {
-    public class Pagination : ResponseBase
+    public class Pagination : RequestBase
     {
         public int Page { get; set; }
      
